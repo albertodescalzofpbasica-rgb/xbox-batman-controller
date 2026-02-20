@@ -1,0 +1,23 @@
+const buttons = {
+  0: document.querySelector('.a'),
+  1: document.querySelector('.b'),
+  2: document.querySelector('.x'),
+  3: document.querySelector('.y')
+};
+
+function updateGamepad() {
+  const gamepads = navigator.getGamepads();
+  if (!gamepads[0]) return;
+
+  gamepads[0].buttons.forEach((btn, i) => {
+    if (buttons[i]) {
+      buttons[i].classList.toggle('active', btn.pressed);
+    }
+  });
+
+  requestAnimationFrame(updateGamepad);
+}
+
+window.addEventListener('gamepadconnected', () => {
+  requestAnimationFrame(updateGamepad);
+});
